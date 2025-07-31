@@ -15,6 +15,12 @@ require_once "bdd-crud.php";
 
 <body>
    <!-- TODO Formulaire pour s'inscrire (créer un utilisateur) -->
+    <form action="" method="post">
+        <label>Nom <input type="text" name="username"></label>
+        <label>E-mail <input type="email" name="email"></label>
+        <label>Mot de passe <input type="password" name="password"></label>
+        <button>S'inscrire</button>
+    </form>
 </body>
 
 </html>
