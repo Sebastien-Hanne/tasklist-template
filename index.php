@@ -2,10 +2,16 @@
 require_once "bdd-crud.php";
 // TODO Redirection vers la page de connexion si l'utilisateur n'est pas connecté
 session_start();
-    if (isset($_SESSION["user_id"]) == false) {
+
+    if (isset($_POST["user_id"]) == false) {
     header("Location: login.php");
+    exit();
 }
 // TODO Afficher la liste des tâches de l'utilisateur connecté
+    if (isset($_POST["user_id"])) {
+        get_all_task($_POST["user_id"]);
+
+    }
 
 ?>
 
@@ -25,7 +31,11 @@ session_start();
     <h1>Liste des tâches</h1>
     <div class="tasks"> 
         <!-- TODO Afficher la liste des tâches de l'utilisateur connecté -->
-        <!-- Utiliser un foreach -->
+        <?php foreach($task as $tasks):?>
+            <div class="task">
+                <p><?= $task["title"] ?></p>
+            </div>
+        <?php endforeach;?>
     </div>
 </body>
 </html>

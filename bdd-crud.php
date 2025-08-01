@@ -20,37 +20,42 @@ function create_user(string $user_id, string $email,string $password) : int | nu
     $database = connect_database();
     // TODO
         $request = $database->prepare("INSERT INTO User (username, email, password) VALUES (?, ?, ?)");
-        $request->execute([$user_id, $email, $password]);
-        $user_id = $database->lastInsertId();
-    return $user_id;
+        $isSuccesful = $request->execute([$user_id, $email, password_hash($password, PASSWORD_DEFAULT)]);
+       if($isSuccesful){
+           $user_id = $database->lastInsertId();
+           return $user_id;
+       }else{
+        return false;
+       }
 }
 // Read (login)
-function get_user(int $email) : array | null {
+function get_user(string $email) : array | false {
     $database = connect_database();
     // TODO 
     $request = $database->prepare("SELECT * FROM User WHERE email=?");
     $request->execute([ $email]);
     $user = $request->fetch(PDO::FETCH_ASSOC);
+    
     return $user;
 }
 
 
 // CRUD Task
 // Create
-function add_task(string $task_id, string $title,string $description) : int | null {
+function add_task(string $user_id, string $title,string $description) : int | null {
     $database = connect_database();
     $request = $database->prepare("INSERT INTO Task (title, description, user_id) VALUES (?, ?, ?)");
-    $request->execute([$task_id, $description, $title]);
+    $request->execute([$user_id, $description, $title]);
     $task_id = $database->lastInsertId();
     return $task_id;
 }
 
 //Read
-function get_task(int $task) : array | null {
+function get_task(int $id) : array | null {
     $database = connect_database();
     // TODO
         $request = $database->prepare("SELECT * FROM Task WHERE title=?");
-        $request->execute([ $task]);
+        $request->execute([ $id]);
         $task = $request->fetch(PDO::FETCH_ASSOC);
     return $task;
 }
