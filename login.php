@@ -1,6 +1,5 @@
 <?php
 require_once "bdd-crud.php";
-// TODO Connection Utilisateur via la session
 session_start();
 
 if(isset($_SESSION["user_id"]) == true){
@@ -8,13 +7,15 @@ if(isset($_SESSION["user_id"]) == true){
     exit();
 }
 
-
 if (isset($_POST["email"])) {
-    get_user($_POST["email"]);
+    $user_id = get_user($_POST["email"]);  
+    
+    if($user_id && password_verify($_POST["password"], $user_id["password"])){
+        $_SESSION["user_id"] = $user_id["id"];
+        header("Location: index.php");
+        exit();
     }
-
-if(password_verify($_POST["password"], $user_id["password"])){
-} 
+}
 ?>
 
 

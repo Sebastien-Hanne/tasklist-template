@@ -1,7 +1,17 @@
 <?php
 require_once "bdd-crud.php";
-// BONUS Valider une tache dans la BDD et redirection vers la page d'accueil
+session_start();
 
+if (isset($_SESSION["user_id"]) == false) {
+    header("Location: login.php");
+    exit();
+}
+
+if (isset($_GET["id"])) {
+    validate_task($_GET["id"]);
+    header("Location: index.php");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,6 +21,6 @@ require_once "bdd-crud.php";
     <title>validate Task</title>
 </head>
 <body>
-    
+    <a href="validate-task.php?id=<?= $task["id"] ?>">Valider</a>
 </body>
 </html>

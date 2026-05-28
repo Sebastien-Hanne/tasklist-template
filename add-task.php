@@ -1,14 +1,21 @@
 <?php
 require_once "bdd-crud.php";
-if(
-    isset($_POST["user_id"]) && 
-    isset($_POST["title"]) && 
-    isset($_POST["description"])) {
+session_start();
 
-    add_task($_POST["user_id"],$_POST["title"],$_POST["description"]);
+if (isset($_SESSION["user_id"]) == false) {
+    header("Location: login.php");
+    exit();
+}
+
+if(isset($_POST["title"]) && 
+   isset($_POST["description"])) {
+
+    add_task($_SESSION["user_id"], $_POST["title"], $_POST["description"]);
+    
+    header("Location: index.php");
+    exit();
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">

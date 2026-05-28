@@ -1,18 +1,13 @@
 <?php
 require_once "bdd-crud.php";
-// TODO Redirection vers la page de connexion si l'utilisateur n'est pas connecté
 session_start();
 
-    if (isset($_POST["user_id"]) == false) {
+if (isset($_SESSION["user_id"]) == false) {
     header("Location: login.php");
     exit();
 }
-// TODO Afficher la liste des tâches de l'utilisateur connecté
-    if (isset($_POST["user_id"])) {
-        get_all_task($_POST["user_id"]);
 
-    }
-
+$tasks = get_all_task($_SESSION["user_id"]);
 ?>
 
 <!DOCTYPE html>

@@ -1,9 +1,17 @@
 <?php
 require_once "bdd-crud.php";
+session_start();
 
-// TODO Suppréssion d'une tâche en fonction de son ID passé en $_GET
+if (isset($_SESSION["user_id"]) == false) {
+    header("Location: login.php");
+    exit();
+}
 
-
+if (isset($_GET["id"])) {
+    delete_task($_GET["id"]);
+    header("Location: index.php");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,6 +21,6 @@ require_once "bdd-crud.php";
     <title>Supprimer une tache</title>
 </head>
 <body>
-    
+    <a href="delete-task.php?id=<?= $task["id"] ?>">Supprimer</a>
 </body>
 </html>

@@ -1,20 +1,17 @@
 <?php
 require_once "bdd-crud.php";
-if (isset($_POST["user_id"]) && 
-    isset ($_POST["email"]) && 
-    isset ($_POST["password"])) {
+session_start();
 
-    create_user($_POST["user_id"], $_POST["email"], $_POST["password"]);
+if (isset($_POST["username"]) && 
+    isset($_POST["email"]) && 
+    isset($_POST["password"])) {
 
-}
+    create_user($_POST["username"], $_POST["email"], $_POST["password"]);
 
-if ($_POST["password"] == $user["password"]) {
-        $_SESSION["user_id"] = $user["id"];
-        header("Location: login.php");
+    header("Location: login.php");
+    exit();
 }
 ?>
-
-
 <!DOCTYPE html>
 <html lang="fr">
 
